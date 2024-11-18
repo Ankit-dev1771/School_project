@@ -1,0 +1,26 @@
+commands-->
+
+1. create database library;
+2. drop database library;
+3. create database library;
+:)
+
+4. create table books(bookId INT NOT NULL PRIMARY KEY, bookName varchar(50) NOT NULL, publicationYear INT, issueDate date, issueTime time, returnDate date, returnTime time, author varchar(40), issueStatus varchar(10) NOT NULL DEFAULT 'not issued', issuedUserId int);
+extra: create index idx_issuedUserId on books(issuedUserId);
+
+5. insert into books(bookId, bookName, publicationYear, issueDate, issueTime, returnDate, returnTime, author, issueStatus, issuedUserId) values (3000, 'English', 2005,NULL,NULL,NULL,NULL,'Sman', 'not issued', NULL);
+6. insert into books(bookId, bookName, publicationYear, issueDate, issueTime, returnDate, returnTime, author, issueStatus, issuedUserId) values (4000, 'Hindi', 2011,NULL,NULL,NULL,NULL,'Rman', 'not issued', NULL);
+7. insert into books(bookId, bookName, publicationYear, issueDate, issueTime, returnDate, returnTime, author, issueStatus, issuedUserId) values (5000, 'History', 2010,NULL,NULL,NULL,NULL,NULL, 'not issued', NULL);
+8. insert into books(bookId, bookName, publicationYear, issueDate, issueTime, returnDate, returnTime, author, issueStatus, issuedUserId) values (5263, 'Physics', 2003,'2023-12-14', '14:31:21',NULL,NULL, 'H.C. Verma', 'issued', 1025);
+9. insert into books(bookId, bookName, publicationYear, issueDate, issueTime, returnDate, returnTime, author, issueStatus, issuedUserId) values (5658, 'cs', 2016,NULL,NULL,NULL,NULL,'Sunita Arora', 'not issued', NULL);
+10. insert into books(bookId, bookName, publicationYear, issueDate, issueTime, returnDate, returnTime, author, issueStatus, issuedUserId) values (5263, 'Physics', 2003,'2023-12-14', '14:31:21',NULL,NULL, 'H.C. Verma', 'issued', 1025);
+
+11. create table users(userId int PRIMARY KEY, userName varchar(50) NOT NULL, phoneNumber varchar(13), emailId varchar(40) NOT NULL, password varchar(40) NOT NULL, adminStatus varchar(9) NOT NULL DEFAULT 'not admin');
+
+12. create table notes(userId int not null primary key, noteNumber int not null, noteTitle varchar(50), noteDescription varchar(10000), updateDate date not null, updateTime time not null);
+extra: create index idx_userId on notes(userId);
+
+13. create table issuedbooksdetails(userId int not null, bookId int not null, bookName varchar(50) not null, issueDate date, issueTime time, returnDate date, returnTime time, fineInRs int not null default 0 );
+14. create index idx_userId on issuedbooksdetails(userId);
+15. create index idx_bookId on issuedbooksdetails(bookId);
+
