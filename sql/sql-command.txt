@@ -24,3 +24,36 @@ extra: create index idx_userId on notes(userId);
 14. create index idx_userId on issuedbooksdetails(userId);
 15. create index idx_bookId on issuedbooksdetails(bookId);
 
+insert commands ->
+
+INSERT INTO books (bookId, bookName, publicationYear, issueDate, issueTime, returnDate, returnTime, author, issueStatus, issuedUserId) 
+VALUES 
+(1, 'The Great Gatsby', 1925, '2024-01-15', '10:00:00', '2024-02-15', '10:00:00', 'F. Scott Fitzgerald', 'not issued', NULL),
+(2, '1984', 1949, '2024-01-20', '12:00:00', '2024-02-20', '12:00:00', 'George Orwell', 'not issued', NULL),
+(3, 'To Kill a Mockingbird', 1960, '2024-02-01', '14:00:00', '2024-03-01', '14:00:00', 'Harper Lee', 'not issued', NULL),
+(4, 'Moby-Dick', 1851, '2024-02-05', '16:00:00', '2024-03-05', '16:00:00', 'Herman Melville', 'not issued', NULL),
+(5, 'Pride and Prejudice', 1813, '2024-03-10', '18:00:00', '2024-04-10', '18:00:00', 'Jane Austen', 'not issued', NULL);
+
+INSERT INTO issuedbooksdetails (userId, bookId, bookName, issueDate, issueTime, returnDate, returnTime, fineInRs) 
+VALUES 
+(1, 1, 'The Great Gatsby', '2024-01-15', '10:00:00', '2024-02-15', '10:00:00', 0),
+(2, 2, '1984', '2024-01-20', '12:00:00', '2024-02-20', '12:00:00', 0),
+(3, 3, 'To Kill a Mockingbird', '2024-02-01', '14:00:00', '2024-03-01', '14:00:00', 0),
+(4, 4, 'Moby-Dick', '2024-02-05', '16:00:00', '2024-03-05', '16:00:00', 0),
+(5, 5, 'Pride and Prejudice', '2024-03-10', '18:00:00', '2024-04-10', '18:00:00', 0);
+
+INSERT INTO users (userId, userName, phoneNumber, emailId, password, adminStatus) 
+VALUES 
+(1, 'Alice Smith', '1234567890', 'alice@example.com', 'password123', 'not admin'),
+(2, 'Bob Johnson', '2345678901', 'bob@example.com', 'password456', 'not admin'),
+(3, 'Charlie Brown', '3456789012', 'charlie@example.com', 'password789', 'not admin'),
+(4, 'Diana Green', '4567890123', 'diana@example.com', 'password101', 'not admin'),
+(5, 'Eve White', '5678901234', 'eve@example.com', 'password102', 'not admin');
+
+INSERT INTO notes (userId, noteNumber, noteTitle, noteDescription, updateDate, updateTime) 
+VALUES 
+(1, 1, 'Meeting Notes', 'Notes from the meeting on library management.', '2024-01-10', '09:00:00'),
+(2, 2, 'Project Ideas', 'Brainstorming session for new library projects.', '2024-01-15', '10:30:00'),
+(3, 3, 'Book Recommendations', 'List of recommended books for the month.', '2024-02-01', '11:00:00'),
+(4, 4, 'Library Survey', 'Results of the library satisfaction survey.', '2024-02-05', '14:00:00'),
+(5, 5, 'Event Planning', 'Planning notes for the upcoming book reading event.', '2024-03-01', '15:00:00');
