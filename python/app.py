@@ -312,4 +312,136 @@ def usr_customer(cur):
         else:
             print("Invalid option! Returning to user panel...")
 
+# Manage notes (Admin can view or add notes to books)
+def manage_notes(cur):
+    while True:
+        print("="*50)
+        print("NOTES MANAGEMENT")
+        print("'1' to view notes")
+        print("'2' to add a note to a book")
+        print("'3' to return to admin panel")
+
+        try:
+            option = int(input("Choose an option> "))
+        except ValueError:
+            print("Invalid input! Returning to admin panel...")
+            return
+
+        if option == 1:
+            view_notes(cur)
+        elif option == 2:
+            add_note_to_book(cur)
+        elif option == 3:
+            break  # Return to admin panel
+        else:
+            print("Invalid option. Returning to admin panel...")
+
+# View all notes
+def view_notes(cur):
+    print("\nList of all notes:")
+    query = """
+    SELECT n.noteId, b.bookName, u.userName, n.note, n.dateAdded
+    FROM notes n
+    JOIN books b ON n.bookId = b.bookId
+    JOIN users u ON n.userId = u.userId
+    """
+    cur.execute(query)
+    notes = cur.fetchall()
+    
+    if not notes:
+        print("No notes found.")
+    else:
+        for note in notes:
+            print(f"Note ID: {note[0]}, Book Name: {note[1]}, User: {note[2]}, Note: {note[3]}, Date Added: {note[4]}")
+    print("="*50)
+
+# Add a note to a book
+def add_note_to_book(cur):
+    book_id = input("Enter book ID to add a note: ")
+    user_id = logged_user['userId']  # Assume logged user is adding the note
+    note_text = input("Enter the note: ")
+    
+    try:
+        query = f"INSERT INTO notes (bookId, userId, note, dateAdded) VALUES ({book_id}, {user_id}, '{note_text}', CURDATE())"
+        cur.execute(query)
+        print("Note added successfully!")
+        cur.connection.commit()
+    except sql.MySQLError as e:
+        print(f"Error adding note: {e}")
+
+# Manage users (Admin can view, delete users)
+def manage_users(cur):
+    while True:
+        print("="*50)
+        print("USER MANAGEMENT")
+        print("'1' to view all users")
+        print("'2' to delete a user")
+        print("'3' to return to admin panel")
+
+        try:
+            option = int(input("Choose an option> "))
+        except ValueError:
+            print("Invalid input! Returning to admin panel...")
+            return
+
+        if option == 1:
+            view_users(cur)
+        elif option == 2:
+            delete_user(cur)
+        elif option == 3:
+            break  # Return to admin panel
+        else:
+            print("Invalid option. Returning to admin panel...")
+
+# View all users
+def view_users(cur):
+    print("\nList of all users:")
+    query = "SELECT userId, userName, phoneNumber, emailId, adminStatus FROM users"
+    cur.execute(query)
+    users = cur.fetchall()
+    
+    if not users:
+        print("No users found.")
+    else:
+        for user in users:
+            print(f"User ID: {user[0]}, Name: {user[1]}, Phone: {user[2]}, Email: {user[3]}, Status: {user[4]}")
+    print("="*50)
+
+# Delete a user
+def delete_user(cur):
+    user_id = input("Enter user ID to delete: ")
+    try:
+        cur.execute(f"DELETE FROM users WHERE userId = {user_id}")
+        print("User deleted successfully!")
+        cur.connection.commit()
+    except sql.MySQLError as e:
+        print(f"Error deleting user: {e}")
+
+# View all issued books
+def view_issued_books(cur):
+    print("\nIssued Books in the library:")
+    
+    # Correct query to get issued books details
+    query = """
+    SELECT ibd.bookId, ibd.bookName, u.userName, ibd.issueDate, ibd.issueTime, ibd.returnDate
+    FROM issuedbooksdetails ibd
+    JOIN users u ON ibd.userId = u.userId
+    WHERE ibd.returnDate IS NULL  -- Only show books that have not been returned
+    """
+    
+    cur.execute(query)
+    issued_books = cur.fetchall()
+    
+    if not issued_books:
+        print("No books are currently issued.")
+    else:
+        for book in issued_books:
+            print(f"Book ID: {book[0]}, Book Name: {book[1]}, Issued To: {book[2]}, Issue Date: {book[3]}, Issue Time: {book[4]}")
+            if book[5]:
+                print(f"Return Date: {book[5]}")
+            else:
+                print("Return Date: Not yet returned")
+            print("="*50)
+
+
 start()
