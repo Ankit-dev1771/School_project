@@ -1,0 +1,25 @@
+1. create database hotel;
+2. use hotel;
+3. create table guest(guestId int primary key, guestName varchar(50) not null, guestGender varchar(6) not null, guestMobile varchar(10), isStaying varchar(1) default '0');
+4. create table rooms(roomNo int primary key, perDayCost varchar(10) not null, isAssignedTo int references guest(guestId) on delete cascade on update cascade);
+5. INSERT INTO rooms (roomNo, perDayCost, isAssignedTo) VALUES
+(101, '1000', NULL),
+(102, '1200', NULL),
+(103, '1500', NULL),
+(104, '1100', NULL),
+(105, '1300', NULL),
+(106, '900', NULL),
+(107, '950', NULL),
+(108, '1600', NULL),
+(109, '2000', NULL),
+(110, '1800', NULL),
+(111, '1100', NULL),
+(112, '1250', NULL),
+(113, '1400', NULL),
+(114, '1700', NULL),
+(115, '1600', NULL),
+(116, '1100', NULL),
+(117, '1400', NULL),
+(118, '1350', NULL),
+(119, '1500', NULL),
+(120, '1250', NULL);
